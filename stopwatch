@@ -1,0 +1,163 @@
+
+import java.awt.*;
+import java.awt.event.*;
+
+ 
+
+public class stopwatch extends WindowAdapter
+{
+     Frame f;
+     int i=0,millisecond=0,second=0,minutes=0;
+        TextField a1,a2,a3;
+        Button start,stop,reset;
+        boolean check=true;
+        
+        public stopwatch()
+        {
+        f=new Frame("StopWatch");
+              Label l1;  
+             l1 =new Label("This is a Sample StopWatch");  
+                l1.setBounds(150,150,250,50);  
+                l1.setEnabled(true);
+                
+             a1=new TextField("0");
+             a2=new TextField("0");
+             a3=new TextField("0");
+             start=new Button("Start");
+             stop=new Button("Stop");
+             reset=new Button("Reset");
+             
+             f.add(l1);
+             f.add(a1);
+             f.add(a2);
+             f.add(a3);
+             f.add(start);
+             f.add(stop);
+             f.add(reset);
+             
+             a1.setBounds(100,200,70,40);
+            a2.setBounds(180,200,70,40);
+            a3.setBounds(260,200,70,40);
+            start.setBounds(150,250,50,50);
+             stop.setBounds(200,250,50,50);
+             reset.setBounds(250,250,50,50);
+            
+            a1.setEnabled(true);
+            a2.setEnabled(true);
+            a3.setEnabled(true);
+            start.setEnabled(true);
+            stop.setEnabled(true);
+            reset.setEnabled(true);
+            
+             f.addWindowListener(this);
+             
+             
+              f.setLayout(null);
+            f.setVisible(true);
+            f.setSize(400,400);
+            
+           reset.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+               check=false;
+               
+                
+                millisecond=0;
+                second=0;
+                minutes=0;
+                a1.setText("0");
+                a2.setText("0");
+                a3.setText("0");
+                
+            }
+        }); 
+           stop.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+              /* seconds sec=new seconds();
+               Integer second=new Integer(sec.second);
+                System.out.println("efrgthj"+second);
+                a1.setText("0");
+                a2.setText(second.toString());
+                
+                sec.stop();
+                a3.setText("0");
+                */
+                check=false;
+               
+                
+            }
+        }); 
+           start.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+             /*  seconds sec=new seconds();
+              
+               sec.start();
+              
+                Integer second=new Integer(sec.second); 
+                a1.setText("0");
+                a2.setText(second.toString());
+                a3.setText("0");
+                */
+                
+                Thread t = new Thread()
+                {
+                    public void run()
+                    {
+                        check=true;
+                        while(true)
+                        {
+                            if(check==true){
+                                try{
+                                    sleep(1);
+                                    
+                                    if(millisecond>450){
+                                        millisecond=0;
+                                        second++;
+                                    }
+                                    if(second>59){
+                                        millisecond=0;
+                                        second=0;
+                                        minutes++;
+                                        
+                                    }
+                                    
+                                    a3.setText(":"+millisecond);
+                                        millisecond++;
+                                        a2.setText(":"+second);
+                                     
+                                        a1.setText(""+minutes);
+                                }catch(Exception e){
+                                    
+                                }
+                            }
+                            else{
+                                break;
+                            }
+                        }
+                        
+                    }
+                };
+                t.start();
+            }
+        }); 
+           
+        }
+         public void windowClosing(WindowEvent e)
+    {
+        i=0;
+        System.exit(0);
+    }
+         
+        
+      
+        
+    public static void main(String[] args) {
+        stopwatch s=new stopwatch();
+    }
+    
+}
