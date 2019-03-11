@@ -1,13 +1,12 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.JOptionPane;
 
- 
-
-public class stopwatch extends WindowAdapter
+public class stopwatch implements WindowListener
 {
      Frame f;
-     int i=0,millisecond=0,second=0,minutes=0;
+     int i=0,millisecond=0,second=1,minutes=0;
         TextField a1,a2,a3;
         Button start,stop,reset;
         boolean check=true;
@@ -64,7 +63,7 @@ public class stopwatch extends WindowAdapter
                
                 
                 millisecond=0;
-                second=0;
+                second=1;
                 minutes=0;
                 a1.setText("0");
                 a2.setText("0");
@@ -76,15 +75,7 @@ public class stopwatch extends WindowAdapter
         {
             public void actionPerformed(ActionEvent e) 
             {
-              /* seconds sec=new seconds();
-               Integer second=new Integer(sec.second);
-                System.out.println("efrgthj"+second);
-                a1.setText("0");
-                a2.setText(second.toString());
-                
-                sec.stop();
-                a3.setText("0");
-                */
+              
                 check=false;
                
                 
@@ -94,16 +85,7 @@ public class stopwatch extends WindowAdapter
         {
             public void actionPerformed(ActionEvent e) 
             {
-             /*  seconds sec=new seconds();
-              
-               sec.start();
-              
-                Integer second=new Integer(sec.second); 
-                a1.setText("0");
-                a2.setText(second.toString());
-                a3.setText("0");
-                */
-                
+            
                 Thread t = new Thread()
                 {
                     public void run()
@@ -115,20 +97,20 @@ public class stopwatch extends WindowAdapter
                                 try{
                                     sleep(1);
                                     
-                                    if(millisecond>450){
+                                    if(millisecond>200){
                                         millisecond=0;
                                         second++;
                                     }
-                                    if(second>59){
+                                    if(second>60){
                                         millisecond=0;
                                         second=0;
                                         minutes++;
                                         
                                     }
                                     
-                                    a3.setText(":"+millisecond);
+                                    a3.setText(""+millisecond);
                                         millisecond++;
-                                        a2.setText(":"+second);
+                                        a2.setText(""+second);
                                      
                                         a1.setText(""+minutes);
                                 }catch(Exception e){
@@ -148,16 +130,52 @@ public class stopwatch extends WindowAdapter
            
         }
          public void windowClosing(WindowEvent e)
-    {
-        i=0;
-        System.exit(0);
-    }
-         
+    {  
+        
+        if(JOptionPane.showConfirmDialog(f,"Are You Sure ?")==JOptionPane.YES_OPTION){
+             System.exit(0);
+            
+        }
         
       
         
+       
+    }
+    
     public static void main(String[] args) {
         stopwatch s=new stopwatch();
     }
+
+   
+    public void windowOpened(WindowEvent e) {
+        
+        System.out.println("window opened");
+        }
+
+   
+    public void windowClosed(WindowEvent e) {
+        
+         System.out.println("windowclosed");
+           }
+
+    
+    public void windowIconified(WindowEvent e) {
+         System.out.println("window Iconified");
+         }
+
+   
+    public void windowDeiconified(WindowEvent e) {
+         System.out.println("window deicnified");
+        }
+
+ 
+    public void windowActivated(WindowEvent e) {
+         System.out.println("window Activated");
+        }
+
+   
+    public void windowDeactivated(WindowEvent e) {
+         System.out.println("window deactivated");
+       }
     
 }
